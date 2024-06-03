@@ -22,14 +22,14 @@
 
 **文件**
 
-./Source 文件夹
-trans.tab.exe是可执行程序
-lex.l 词法分析程序
-trans.y 语法分析程序
-num2str.h 将各类型常数转换为十进制整数
-Table.h 生成汇编代码
+./Source 文件夹<br>
+trans.tab.exe是可执行程序<br>
+lex.l 词法分析程序<br>
+trans.y 语法分析程序<br>
+num2str.h 将各类型常数转换为十进制整数<br>
+Table.h 生成汇编代码<br>
 
-./Output 文件夹
+./Output 文件夹<br>
 内有各测试用例的输入文件与输出文件
 
 
