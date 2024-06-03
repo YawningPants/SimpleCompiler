@@ -1,0 +1,14 @@
+//此程序用于测试if语句
+program example;
+var
+A,B:bool;
+C,D,F,G:integer;
+begin
+if A and B and (C>D) then 
+    if (A<B)
+    then F:=1;
+    else
+    F:=0;
+else
+    G:=G+1;
+end.

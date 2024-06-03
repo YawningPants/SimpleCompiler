@@ -1,0 +1,13 @@
+//此程序用于测试布尔表达式的赋值
+program example;
+var 
+    a,b,c,d:integer;
+    e,f:bool;
+begin
+    a:=1;
+    b:=2;
+    c:=3;
+    d:=4;
+    e:=true;
+    f:=(a=b) and (c<d) or e;
+end.

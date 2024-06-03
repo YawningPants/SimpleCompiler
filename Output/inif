@@ -1,0 +1,12 @@
+//此程序用于测试if语句
+program example;
+var
+     a,d:bool;
+     b,c,e:integer;
+     x:integer;
+begin
+if a then
+ x:=2;
+else
+     a:=3;
+end.

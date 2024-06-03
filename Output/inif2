@@ -1,0 +1,12 @@
+program iftest;
+var
+    a,b,c,d:integer;
+    x,y,z:integer;
+begin
+    a:=2;
+    if (a=2) then
+    begin
+     a:=3;
+     b:=4;
+     end
+end.

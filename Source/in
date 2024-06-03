@@ -1,0 +1,20 @@
+program whiletest;
+var
+    a,b,c,d:integer;
+    x,y,z:integer;
+begin
+    a:=3;
+    b:=4;
+    c:=1;
+    d:=10;
+    x:=0;
+    y:=5;
+    while (a<b) and (c<d)
+    do
+    begin
+            if (x<y)
+            then
+               x:=x+1;
+            c:=c+1;
+    end 
+end.

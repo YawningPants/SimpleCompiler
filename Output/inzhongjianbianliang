@@ -1,0 +1,30 @@
+//此程序用于测试赋值语句,中间变量的生成,类型转换
+program example;
+var
+    a,b,c,d:integer;
+    ra,rb,rc:real;
+    fa,fb:bool;
+    str:char;
+begin
+    a:=a;
+    a:=ra;
+    a:=fa;
+    a:=str;
+
+    ra:=a;
+    ra:=ra;
+    ra:=fa;
+    ra:=str;
+
+    fa:=a;
+    fa:=ra;
+    fa:=fa;
+    fa:=str;
+
+    str:=a;
+    str:=ra;
+    str:=fa;
+    str:=str;
+
+end.
+    

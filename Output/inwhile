@@ -1,0 +1,12 @@
+program whiletest;
+var
+    a,b,c,d:integer;
+    x,y,z:integer;
+begin
+    while (a<b) and (x<y)
+    do
+        if (c<d)
+        then
+            x:=y+z;
+
+end.

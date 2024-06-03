@@ -1,0 +1,8 @@
+//此程序用于测试repeat语句
+program repeattest;
+var 
+    x,y:integer;
+begin
+    repeat x:=x+1;
+    until (x>y)
+end.

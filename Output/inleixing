@@ -1,0 +1,14 @@
+//此程序用于测试赋值类型转换
+program example;
+var 
+    i,x,a:integer;
+    r:real;
+    c:char;
+begin
+    a:=0x3F;
+    x:=3;
+    x:=013;
+    c:='c';
+    r:=3.334;
+    r:=2.2333e2;
+end.

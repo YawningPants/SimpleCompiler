@@ -1,0 +1,151 @@
+<常量说明> ::= e 
+<变量> ::= <标识符>    
+<变量> ::= <标识符>
+<标识符表> ::= <变量>
+<标识符表> ::= <变量>, <标识符表>
+<变量定义> ::= <标识符表>:<类型>;
+<变量说明> ::= var  <变量定义>
+<R_U> := <R>  <执行语句>  until
+<变量> ::= <标识符>
+标识符算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= <项>
+常数算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= <算术表达式>+<项>
+<表达式> ::= <算术表达式>
+<赋值语句> ::= <变量>:=<表达式>
+<简单句> ::= <赋值语句>
+<执行语句> ::= <简单句>
+<R_U> := <R>  <执行语句>  until
+*****************BackPatch 0,3
+标识符算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= <项>
+<关系符> ::= >
+标识符算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= <项>
+<布尔量> ::= (<算术表达式><关系符><算术表达式>)
+<布尔因子> ::= <布尔量>
+<布尔项> ::= <布尔因子>
+<布尔表达式> ::= <布尔项>
+<repeat语句> ::=<R_U> <布尔表达式>
+*****************BackPatch 4,1
+<结构句> ::= <repeat语句>
+<执行语句> ::= <结构句>   
+*****************BackPatch 3,5
+<语句表> ::= <执行语句>
+<复合句> ::= begin <语句表> end
+<分程序> ::= <常量说明><变量说明><复合句>.
+<程序> ::= program <标识符>;<分程序>
+
+Analysis end.
+
+QuarterList output:
+NO.   0 (         ,       ,       , -    )
+NO.   1 (     Int+,      x,      1,     T0 )
+NO.   2 (       :=,     T0,       ,      x )
+NO.   3 (       j>,      x,      y,      5 )
+NO.   4 (        j,       ,       ,      1 )
+NO.   5 (     Stop,       ,       ,      0 )
+ Addr.   name              type
+   1         x           integer
+   2         y           integer
+   3         1           integer
+   4        T0           integer
+DATA SEGMENT
+    TAB DW 4 DUP(?)
+    Temp db '0000H','$'
+    DATA ENDS
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+
+    START:
+    MOV AX,DATA
+    MOV DS,AX
+NO1:
+    MOV AX, TAB[0]
+    ADD AX, 1
+    MOV TAB[6], AX
+NO2:
+    MOV AX, TAB[6]
+    MOV TAB[0], AX
+NO3:
+    MOV AX, TAB[0]
+    CMP AX, TAB[2]
+    JG NO5
+NO4:
+    JMP NO1
+NO5:
+    MOV CX, 4
+    MOV SI, 0
+
+AGAIN:
+    MOV AX,TAB[SI]
+    CALL PrintAX
+    CALL PRINTHC
+    INC SI
+    INC SI
+    LOOP AGAIN
+NO0:
+    MOV AH,4CH
+    INT 21H
+PrintAX proc
+    PUSH CX
+    PUSH SI
+    jmp Next
+
+
+Next:
+    mov si,offset Temp+3;保存存储结果的字符串的最后一个字符偏移地址
+    xor cx,cx           ;对cX清零
+    mov cl,4            ;设置循环次数为4次
+
+MainPart:
+    mov DH,AL           ;将Al的内容传送给DH
+
+    shr AX,1
+    shr AX,1
+    shr AX,1
+    shr AX,1
+                ;上述4句为使AX逻辑右移4位 理论上可以写成 shr AX ,cl(cl设置为4)
+                ;但这个地方cl要记录循环次数每次循环会是cl-1所以无法满足正常的移位需要
+    and dh,0FH
+    add dh,30H
+    cmp dh,':'  ;':'的ASCII比9大1 而字母的ASCII码与数字的ASCII码中间隔了7个其它字符
+    ja isLetter ;如果为字母则跳转
+    jb No       ;如果不是
+
+isLetter:
+    add dh,7H   ;ASCII码加7变为字母
+No:
+    mov [si],dh ;将字符存入,待存放内容的字符串的对应位置
+
+    dec si      ;待存放内容的内存地址自减1
+loop MainPart
+
+print:
+    mov dx,offset Temp  ;将带打印的字符串的偏移地址存放进dx中
+    mov ah,09           ;设置DOS 09号功能
+    int 21H         ;功能调用
+
+    POP SI
+    POP CX
+
+    ret
+PrintAX endp
+
+
+PRINTHC proc
+    MOV DL, 10
+    MOV AH, 2
+    INT 21H
+    RET
+PRINTHC ENDP
+    CODE ENDS
+    END START

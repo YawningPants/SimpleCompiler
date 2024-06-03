@@ -1,0 +1,14 @@
+//此程序用于测试repeat语句
+program repeattest;
+var 
+    a,b,c,d:integer;
+    w:integer;
+begin
+    if(w<1)
+    then
+        a:=b*c+d;
+    else
+        repeat
+            a:=a-1;
+        until (a<0)
+end.

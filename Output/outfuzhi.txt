@@ -1,0 +1,206 @@
+<常量说明> ::= e 
+<变量> ::= <标识符>    
+<变量> ::= <标识符>
+<变量> ::= <标识符>
+<变量> ::= <标识符>
+<标识符表> ::= <变量>
+<标识符表> ::= <变量>, <标识符表>
+<标识符表> ::= <变量>, <标识符表>
+<标识符表> ::= <变量>, <标识符表>
+<变量定义> ::= <标识符表>:<类型>;
+<变量说明> ::= var  <变量定义>
+<变量> ::= <标识符>
+常数算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= <项>
+<表达式> ::= <算术表达式>
+<赋值语句> ::= <变量>:=<表达式>
+<简单句> ::= <赋值语句>
+<执行语句> ::= <简单句>
+<变量> ::= <标识符>
+常数算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= <项>
+<表达式> ::= <算术表达式>
+<赋值语句> ::= <变量>:=<表达式>
+<简单句> ::= <赋值语句>
+<执行语句> ::= <简单句>
+<变量> ::= <标识符>
+常数算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= <项>
+<表达式> ::= <算术表达式>
+<赋值语句> ::= <变量>:=<表达式>
+<简单句> ::= <赋值语句>
+<执行语句> ::= <简单句>
+<变量> ::= <标识符>
+常数算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= <项>
+<表达式> ::= <算术表达式>
+<赋值语句> ::= <变量>:=<表达式>
+<简单句> ::= <赋值语句>
+<执行语句> ::= <简单句>
+<变量> ::= <标识符>
+标识符算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= <项>
+标识符算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+标识符算数量
+<因子> ::= <算术量>
+<项> ::= <因子>
+<算术表达式> ::= -<项>
+<因子> ::= (<算术表达式>)
+<项> ::= <项>*<因子>
+<算术表达式> ::= <算术表达式>+<项>
+<表达式> ::= <算术表达式>
+<赋值语句> ::= <变量>:=<表达式>
+<简单句> ::= <赋值语句>
+<执行语句> ::= <简单句>
+<语句表> ::= <执行语句>
+<语句表> ::= <执行语句>;<语句表>
+<语句表> ::= <执行语句>;<语句表>
+<语句表> ::= <执行语句>;<语句表>
+<语句表> ::= <执行语句>;<语句表>
+<复合句> ::= begin <语句表> end
+<分程序> ::= <常量说明><变量说明><复合句>.
+<程序> ::= program <标识符>;<分程序>
+
+Analysis end.
+
+QuarterList output:
+NO.   0 (         ,       ,       , -    )
+NO.   1 (       :=,      2,       ,      A )
+NO.   2 (       :=,      3,       ,      B )
+NO.   3 (       :=,      4,       ,      C )
+NO.   4 (       :=,      5,       ,      D )
+NO.   5 (    Minus,      D,       ,     T0 )
+NO.   6 (     Int*,      C,     T0,     T1 )
+NO.   7 (     Int+,      B,     T1,     T2 )
+NO.   8 (       :=,     T2,       ,      A )
+NO.   9 (     Stop,       ,       ,      0 )
+ Addr.   name              type
+   1         A           integer
+   2         B           integer
+   3         C           integer
+   4         D           integer
+   5         2           integer
+   6         3           integer
+   7         4           integer
+   8         5           integer
+   9        T0           integer
+  10        T1           integer
+  11        T2           integer
+DATA SEGMENT
+    TAB DW 11 DUP(?)
+    Temp db '0000H','$'
+    DATA ENDS
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+
+    START:
+    MOV AX,DATA
+    MOV DS,AX
+NO1:
+    MOV AX, 2
+    MOV TAB[0], AX
+NO2:
+    MOV AX, 3
+    MOV TAB[2], AX
+NO3:
+    MOV AX, 4
+    MOV TAB[4], AX
+NO4:
+    MOV AX, 5
+    MOV TAB[6], AX
+NO5:
+    MOV AX, 0
+    SUB AX, TAB[6]
+    MOV TAB[16], AX
+NO6:
+    MOV AX, TAB[4]
+     MOV BX, TAB[16]
+    IMUL BX
+    MOV TAB[18], AX
+NO7:
+    MOV AX, TAB[2]
+    ADD AX, TAB[18]
+    MOV TAB[20], AX
+NO8:
+    MOV AX, TAB[20]
+    MOV TAB[0], AX
+NO9:
+    MOV CX, 11
+    MOV SI, 0
+
+AGAIN:
+    MOV AX,TAB[SI]
+    CALL PrintAX
+    CALL PRINTHC
+    INC SI
+    INC SI
+    LOOP AGAIN
+NO0:
+    MOV AH,4CH
+    INT 21H
+PrintAX proc
+    PUSH CX
+    PUSH SI
+    jmp Next
+
+
+Next:
+    mov si,offset Temp+3;保存存储结果的字符串的最后一个字符偏移地址
+    xor cx,cx           ;对cX清零
+    mov cl,4            ;设置循环次数为4次
+
+MainPart:
+    mov DH,AL           ;将Al的内容传送给DH
+
+    shr AX,1
+    shr AX,1
+    shr AX,1
+    shr AX,1
+                ;上述4句为使AX逻辑右移4位 理论上可以写成 shr AX ,cl(cl设置为4)
+                ;但这个地方cl要记录循环次数每次循环会是cl-1所以无法满足正常的移位需要
+    and dh,0FH
+    add dh,30H
+    cmp dh,':'  ;':'的ASCII比9大1 而字母的ASCII码与数字的ASCII码中间隔了7个其它字符
+    ja isLetter ;如果为字母则跳转
+    jb No       ;如果不是
+
+isLetter:
+    add dh,7H   ;ASCII码加7变为字母
+No:
+    mov [si],dh ;将字符存入,待存放内容的字符串的对应位置
+
+    dec si      ;待存放内容的内存地址自减1
+loop MainPart
+
+print:
+    mov dx,offset Temp  ;将带打印的字符串的偏移地址存放进dx中
+    mov ah,09           ;设置DOS 09号功能
+    int 21H         ;功能调用
+
+    POP SI
+    POP CX
+
+    ret
+PrintAX endp
+
+
+PRINTHC proc
+    MOV DL, 10
+    MOV AH, 2
+    INT 21H
+    RET
+PRINTHC ENDP
+    CODE ENDS
+    END START

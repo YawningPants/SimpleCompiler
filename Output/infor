@@ -1,0 +1,11 @@
+//此程序用于测试for语句
+program fortest;
+var 
+    i,x,a:integer;
+begin
+     x:=3;
+    for i:=1 to 2*x
+    do
+        a:=a+2;
+end.
+
